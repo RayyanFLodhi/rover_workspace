@@ -59,6 +59,11 @@ def generate_launch_description():
             'lidar_port': 7502,
             'imu_port': 7503,
             'timestamp_mode': 'TIME_FROM_ROS_TIME',
+            # Half the horizontal resolution = half the network traffic.
+            # 1024 columns at 10 Hz is plenty for SLAM/Nav2, and it cuts
+            # UDP packet drops through Docker dramatically. Set back to
+            # '2048x10' on the Jetson if you want max detail there.
+            'lidar_mode': '1024x10',
             # Only run the point-cloud processor. The extra processors
             # (2D images / laser scan / telemetry) expect a 'WINDOW' packet
             # field that this sensor's firmware (2.5.3) doesn't send, and
